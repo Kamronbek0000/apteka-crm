@@ -1,73 +1,429 @@
-<!DOCTYPE html>
-<html lang="en">
+!DOCTYPE html>
+<html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Apteka CRM Pro</title>
-  <link rel="stylesheet" href="./style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MaktabID — Aqlli Maktab Boshqaruv Tizimi</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
-<nav>
-  <div class="logo">AptekaCRM</div>
-  <ul>
-    <li><a href="#">Bosh sahifa</a></li>
-    <li><a href="#">Imkoniyatlar</a></li>
-    <li><a href="#">Narx</a></li>
-    <li><a href="#">Aloqa</a></li>
-  </ul>
-</nav>
+<div class="phone-container">
 
-<header class="hero">
-  <div class="hero-text">
-    <h1>Aptekalar uchun Professional CRM</h1>
-    <p>Ombor, sotuv va hisobotlarni bitta tizimda boshqaring</p>
-    <button id="demoBtn">Demo Korish</button>
-  </div>
-</header>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="logo-icon">🏫</span>
+            <div style="font-weight:700; font-size:16px;">MaktabID</div>
+        </div>
+        
+        <div class="menu-section-title">Asosiy</div>
+        <div class="menu-item active" onclick="navigateTo('dashboardPage')">📊 Bosh panel</div>
+        <div class="menu-item">📷 Face ID Monitor</div>
+        <div class="menu-item">📅 Davomat</div>
+        <div class="menu-item">⏰ Dars jadvali</div>
 
-<section class="features">
-  <h2>Tizim Imkoniyatlari</h2>
+        <div class="menu-section-title">O'quvchilar</div>
+        <div class="menu-item">👥 Sinf ro'yxati</div>
+        <div class="menu-item">🎯 To'garaklar</div>
+        <div class="menu-item">📈 Baholar</div>
 
-  <div class="cards">
-
-    <div class="card">
-      <h3>Ombor Nazorati</h3>
-      <p>Dorilar va mahsulotlarni boshqarish.</p>
+        <div class="menu-section-title">Tizim</div>
+        <div class="menu-item">🔔 Bildirishnomalar <span class="badge-count">3</span></div>
+        <div class="menu-item">🍽️ Oshxona</div>
+        <div class="menu-item">👤 Profil</div>
+        <div class="menu-item" onclick="navigateTo('settingsPage')">⚙️ Sozlamalar</div>
     </div>
 
-    <div class="card">
-      <h3>Sotuv Tizimi</h3>
-      <p>Chek chiqarish va savdo statistikasi.</p>
+    <div id="loginPage" class="page active">
+        <div class="brand-section">
+            <div class="brand-logo">🏫</div>
+            <h2 class="brand-name">MaktabID</h2>
+            <p class="brand-subtitle">Aqlli maktab boshqaruv tizimi</p>
+        </div>
+
+        <div class="tab-container">
+            <button class="tab-btn active" onclick="switchAuthTab('login')">Kirish</button>
+            <button class="tab-btn" onclick="switchAuthTab('register')">Ro'yxatdan o'tish</button>
+        </div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>Email yoki login</label>
+                <input type="text" id="loginEmail" class="form-control" placeholder="admin@maktab.uz" required>
+            </div>
+            <div class="form-group">
+                <label>Parol</label>
+                <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn-submit">Tizimga kirish →</button>
+        </form>
+
+        <div class="demo-section">
+            <div class="demo-title">Tezkor kirish (demo)</div>
+            <div class="demo-grid">
+                <button class="demo-card" onclick="fillDemo('director@maktab.uz')">
+                    <span>👔</span>
+                    <div class="demo-card-info">
+                        <h4>Direktor</h4>
+                        <p>director@maktab.uz</p>
+                    </div>
+                </button>
+                <button class="demo-card" onclick="fillDemo('teacher@maktab.uz')">
+                    <span>👩‍🏫</span>
+                    <div class="demo-card-info">
+                        <h4>O'qituvchi</h4>
+                        <p>teacher@maktab.uz</p>
+                    </div>
+                </button>
+                <button class="demo-card" onclick="fillDemo('parent@maktab.uz')">
+                    <span>👨‍👩‍👦</span>
+                    <div class="demo-card-info">
+                        <h4>Ota-ona</h4>
+                        <p>parent@maktab.uz</p>
+                    </div>
+                </button>
+                <button class="demo-card" onclick="fillDemo('admin@maktab.uz')">
+                    <span>⚙️</span>
+                    <div class="demo-card-info">
+                        <h4>Admin</h4>
+                        <p>admin@maktab.uz</p>
+                    </div>
+                </button>
+                <button class="demo-card" onclick="fillDemo('oshxona@maktab.uz')">
+                    <span>🍽️</span>
+                    <div class="demo-card-info">
+                        <h4>Oshxonachi</h4>
+                        <p>oshxona@maktab.uz</p>
+                    </div>
+                </button>
+            </div>
+        </div>
     </div>
 
-    <div class="card">
-      <h3>Hisobotlar</h3>
-      <p>Kunlik va oylik hisobotlar.</p>
+    <div id="registerPage" class="page">
+        <div class="brand-section">
+            <div class="brand-logo">🏫</div>
+            <h2 class="brand-name">MaktabID</h2>
+            <p class="brand-subtitle">Aqlli maktab boshqaruv tizimi</p>
+        </div>
+
+        <div class="tab-container">
+            <button class="tab-btn" onclick="switchAuthTab('login')">Kirish</button>
+            <button class="tab-btn active" onclick="switchAuthTab('register')">Ro'yxatdan o'tish</button>
+        </div>
+
+        <form onsubmit="handleRegister(event)">
+            <div class="form-group">
+                <label>Ism</label>
+                <input type="text" class="form-control" placeholder="Aziz" required>
+            </div>
+            <div class="form-group">
+                <label>Familiya</label>
+                <input type="text" class="form-control" placeholder="Karimov" required>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="form-control" placeholder="siz@maktab.uz" required>
+            </div>
+            <div class="form-group">
+                <label>Rol</label>
+                <select class="form-control" required>
+                    <option value="" disabled selected>Rolni tanlang</option>
+                    <option value="direktor">Direktor</option>
+                    <option value="o_qituvchi">O'qituvchi</option>
+                    <option value="ota_ona">Ota-ona</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Maktab Nomi</label>
+                <input type="text" class="form-control" placeholder="Maktab nomi" required>
+            </div>
+            <div class="form-group">
+                <label>Parol</label>
+                <input type="password" class="form-control" placeholder="Min 8 ta belgi" minlength="8" required>
+            </div>
+            <div class="form-group">
+                <label>Tasdiqlash</label>
+                <input type="password" class="form-control" placeholder="Parolni takrorlang" required>
+            </div>
+            <button type="submit" class="btn-submit">Ro'yxatdan o'tish →</button>
+        </form>
     </div>
 
-    <div class="card">
-      <h3>Admin Panel</h3>
-      <p>Foydalanuvchilarni boshqarish.</p>
+    <div id="dashboardPage" class="page">
+        <div class="app-header" style="margin: -20px -20px 20px -20px;">
+            <div class="header-left">
+                <button class="menu-btn" onclick="toggleSidebar(true)">☰</button>
+                <span class="logo-icon">🏫</span>
+                <div class="status-badge"><span class="status-dot"></span> Jonli</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="user-avatar">SQ</div>
+                <button class="logout-btn" onclick="logout()">Chiqish</button>
+            </div>
+        </div>
+
+        <h2 class="dashboard-title">Bosh panel</h2>
+        <p class="dashboard-date">seshanba, 19-may, 2026 • 13:00</p>
+
+        <div class="metrics-list">
+            <div class="metric-card blue">
+                <div class="metric-info">
+                    <span>Bugun keldi</span>
+                    <h3 class="text-green">487</h3>
+                </div>
+                <div class="metric-sub">Jami 500 dan • <span>96%</span></div>
+            </div>
+            <div class="metric-card purple">
+                <div class="metric-info">
+                    <span>Hozir darsda</span>
+                    <h3 class="text-blue">409</h3>
+                </div>
+                <div class="metric-sub"><span>80% faol</span></div>
+            </div>
+            <div class="metric-card orange">
+                <div class="metric-info">
+                    <span>To'garakda</span>
+                    <h3 class="text-orange">89</h3>
+                </div>
+                <div class="metric-sub"><span>14 xil to'garak</span></div>
+            </div>
+            <div class="metric-card red">
+                <div class="metric-info">
+                    <span>Sababsiz yo'q</span>
+                    <h3 class="text-red">25</h3>
+                </div>
+                <div class="metric-sub"><span class="text-red">4.9% • 8-sinf ko'p</span></div>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-header-inline">
+                <h3>Jonli holat</h3>
+                <button class="see-all-btn">Hammasi →</button>
+            </div>
+            <table class="live-table">
+                <thead>
+                    <tr>
+                        <th>O'quvchi</th>
+                        <th>Holat</th>
+                        <th>Vaqt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="student-cell">
+                                <div class="student-avatar">AK</div>
+                                <div>
+                                    <div class="student-name">Laziz Karimboyev</div>
+                                    <div class="student-class">7-B sinf</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="status-pill darsda">Darsda</span></td>
+                        <td>08:17</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="student-cell">
+                                <div class="student-avatar">MR</div>
+                                <div>
+                                    <div class="student-name">Mavluda Rasulova</div>
+                                    <div class="student-class">7-A sinf</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="status-pill togarak">To'garakda</span></td>
+                        <td>15:04</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="student-cell">
+                                <div class="student-avatar">JT</div>
+                                <div>
+                                    <div class="student-name">Jasur Tursunov</div>
+                                    <div class="student-class">9-A sinf</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="status-pill keldi">Keldi</span></td>
+                        <td>08:05</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="student-cell">
+                                <div class="student-avatar">ZH</div>
+                                <div>
+                                    <div class="student-name">Zilola Husanova</div>
+                                    <div class="student-class">6-B sinf</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="status-pill yoq">Yo'q</span></td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="student-cell">
+                                <div class="student-avatar">BN</div>
+                                <div>
+                                    <div class="student-name">Ali Rustamov</div>
+                                    <div class="student-class">10-A sinf</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="status-pill ketdi">Ketdi</span></td>
+                        <td>12:48</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section-box">
+            <h3 style="font-size:14px; font-weight:600; margin-bottom:10px;">Haftalik davomat (%)</h3>
+            <div class="chart-container">
+                <div class="chart-bar-wrapper">
+                    <div class="chart-bar" style="height: 94%;">
+                        <span class="bar-val">97</span>
+                    </div>
+                    <span class="bar-label">Du</span>
+                </div>
+                <div class="chart-bar-wrapper">
+                    <div class="chart-bar" style="height: 94%;">
+                        <span class="bar-val">95</span>
+                    </div>
+                    <span class="bar-label">Se</span>
+                </div>
+                <div class="chart-bar-wrapper">
+                    <div class="chart-bar" style="height: 89%;">
+                        <span class="bar-val">87</span>
+                    </div>
+                    <span class="bar-label">Ch</span>
+                </div>
+                <div class="chart-bar-wrapper">
+                    <div class="chart-bar green" style="height: 96%;">
+                        <span class="bar-val">90</span>
+                    </div>
+                    <span class="bar-label">Pa</span>
+                </div>
+                <div class="chart-bar-wrapper">
+                    <div class="chart-bar green" style="height: 95%;">
+                        <span class="bar-val">98</span>
+                    </div>
+                    <span class="bar-label">Ju</span>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="card">
-      <h3>Responsive Dizayn</h3>
-      <p>Telefon va kompyuterga mos.</p>
+    <div id="settingsPage" class="page">
+        <div class="app-header" style="margin: -20px -20px 20px -20px;">
+            <div class="header-left">
+                <button class="menu-btn" onclick="toggleSidebar(true)">☰</button>
+                <span class="logo-icon">🏫</span>
+                <div class="status-badge"><span class="status-dot"></span> Jonli</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="user-avatar">SQ</div>
+                <button class="logout-btn" onclick="logout()">Chiqish</button>
+            </div>
+        </div>
+
+        <h2 class="settings-title">Sozlamalar</h2>
+        <p class="settings-subtitle">Tizim va bildirishnoma sozlamalari</p>
+
+        <div class="settings-group">
+            <div class="settings-group-title">Bildirishnomalar</div>
+            
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Push bildirishnomalar</h4>
+                    <p>Ota-onalarga real vaqt xabarlari</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>SMS xabarlari</h4>
+                    <p>Sababsiz yo'q bo'lganda SMS</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Haftalik hisobot</h4>
+                    <p>Har dushanba emailga</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <div class="settings-group-title">Face ID Tizimi</div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Liveness detection</h4>
+                    <p>Foto/video bilan aldashni bloklash</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Noma'lum shaxs ogohlantirishi</h4>
+                    <p>Tanilmagan yuzda qo'riqchiga xabar</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div style="margin-top: 15px;">
+                <div class="setting-info">
+                    <div style="display:flex; justify-content:space-between;">
+                        <h4>Minimal ishonch darajasi</h4>
+                        <span id="confidenceVal" style="font-size:13px; color:var(--primary); font-weight:600;">Hozir: 85%</span>
+                    </div>
+                </div>
+                <input type="range" min="50" max="100" value="88" class="range-slider" id="confidenceRange" oninput="updateConfidence(this.value)">
+            </div>
+        </div>
+
+        <div class="settings-group">
+            <div class="settings-group-title">Xavfsizlik</div>
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h4>Ikki bosqichli autentifikatsiya</h4>
+                    <p>Kirishda SMS kod</p>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
     </div>
 
-    <div class="card">
-      <h3>Tezkor Ishlash</h3>
-      <p>Optimallashtirilgan zamonaviy UI.</p>
-    </div>
-
-  </div>
-</section>
-
-<section class="price">
-  <h2>Narx Kelishiladi</h2>
-  <p>Professional web tizim</p>
-</section>
+</div>
 
 <script src="./main.js"></script>
 </body>
